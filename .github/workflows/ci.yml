@@ -47,10 +47,9 @@ jobs:
         run: pnpm test
 
       - name: Build theme
-        run: pnpm build:jar
+        run: pnpm build
 
       - name: Commit build artifacts
-        if: github.event_name == 'push'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
