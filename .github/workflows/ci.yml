@@ -11,6 +11,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -47,17 +50,16 @@ jobs:
         run: pnpm test
 
       - name: Build theme
-        run: pnpm build:jar
+        run: pnpm build
 
       - name: Commit build artifacts
-        if: github.event_name == 'push'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f target/
+          git add -f theme/keywind/login/resources/dist/
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
             git commit -m "chore: update build artifacts [skip ci]"
-            git push
+            git push origin HEAD:${{ github.head_ref || github.ref_name }}
           fi

@@ -1,0 +1,10 @@
+.qmulus-background {
+    background-size: cover; 
+    background-position: center center; 
+    background-repeat: no-repeat;
+}
+
+.qmulus-logo {
+    max-width: 65%;
+    margin: 0 auto;
+}
